@@ -1,0 +1,66 @@
+{
+  "manifest_version": 3,
+  "name": "EmailHelper",
+  "version": "1.0.0",
+  "description": "Chrome extension to help with Gmail email generation",
+
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "identity",
+    "webRequest"
+  ],
+
+  "host_permissions": [
+    "https://mail.google.com/*",
+    "https://gmail.com/*",
+    "https://www.googleapis.com/*"
+  ],
+
+  "oauth2": {
+    "client_id": "YOUR_PERSONAL_CLIENT_ID_HERE",
+    "scopes": ["https://www.googleapis.com/auth/gmail.readonly"]
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*", "https://gmail.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "EmailHelper"
+  },
+
+  "commands": {
+    "open_settings": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Alt+Shift+S"
+      },
+      "description": "Open EmailHelper settings"
+    },
+    "generate_email": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+A",
+        "mac": "Alt+Shift+A"
+      },
+      "description": "Generate and paste sales email"
+    },
+    "generate_email_with_instruction": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+I",
+        "mac": "Alt+Shift+I"
+      },
+      "description": "Generate email with text instruction"
+    }
+  }
+}
