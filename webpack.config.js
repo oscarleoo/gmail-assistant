@@ -30,6 +30,10 @@ module.exports = {
           from: "src/popup/popup.css",
           to: "popup.css",
         },
+        {
+          from: "src/icons",
+          to: "icons",
+        },
       ],
     }),
   ],

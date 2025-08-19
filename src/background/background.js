@@ -71,8 +71,53 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       return true; // Keep message channel open for async response
       break;
 
+    case "executeCommand":
+      handlePopupCommand(request.command)
+        .then(() => sendResponse({ success: true }))
+        .catch((error) => {
+          console.error("Popup command error:", error);
+          sendResponse({ success: false, error: error.message });
+        });
+      return true; // Keep message channel open for async response
+
     default:
       console.log("Unknown action:", request.action);
       sendResponse({ success: false, error: "Unknown action" });
   }
 });
+
+async function handlePopupCommand(command) {
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+  if (!isGmailPage(tab.url)) {
+    throw new Error("Not on Gmail");
+  }
+
+  switch (command) {
+    case "open_settings":
+      await openSettingsModal();
+      break;
+    case "generate_email":
+      if (currentThread.threadId) {
+        await generateAndSendEmail(currentThread.threadId);
+      } else {
+        chrome.tabs.sendMessage(tab.id, {
+          action: "showWarning",
+          message: "No email thread detected. Open an email thread first.",
+        });
+      }
+      break;
+    case "generate_email_with_instruction":
+      if (currentThread.threadId) {
+        await openInstructionModal();
+      } else {
+        chrome.tabs.sendMessage(tab.id, {
+          action: "showWarning",
+          message: "No email thread detected. Open an email thread first.",
+        });
+      }
+      break;
+    default:
+      throw new Error("Unknown command: " + command);
+  }
+}

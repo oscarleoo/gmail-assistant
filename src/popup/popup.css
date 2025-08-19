@@ -39,10 +39,30 @@ p {
   align-items: center;
   margin-bottom: 10px;
   font-size: 12px;
+  position: relative;
 }
 
 .shortcut-item:last-child {
   margin-bottom: 0;
+}
+
+.shortcut-item.clickable {
+  cursor: pointer;
+  padding: 8px;
+  margin: 4px -8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.shortcut-item.clickable:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.shortcut-item.clickable:active {
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .key {
@@ -56,6 +76,42 @@ p {
 
 .description {
   font-weight: 500;
+  flex: 1;
+  text-align: left;
+  margin-left: 12px;
+}
+
+.click-hint {
+  font-size: 10px;
+  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.shortcut-item.clickable:hover .click-hint {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.status {
+  margin-top: 15px;
+  font-size: 11px;
+  opacity: 0.8;
+  min-height: 16px;
+}
+
+.status.success {
+  color: #4ade80;
+}
+
+.status.error {
+  color: #f87171;
+}
+
+.status.loading {
+  color: #60a5fa;
 }
 
 @media (prefers-color-scheme: dark) {

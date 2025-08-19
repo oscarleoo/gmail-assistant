@@ -11,19 +11,26 @@
       <h1>EmailHelper</h1>
       <p>Your Gmail email assistant</p>
       <div class="shortcuts">
-        <div class="shortcut-item">
+        <div class="shortcut-item clickable" data-command="open_settings">
           <span class="key">Ctrl+Shift+S</span>
           <span class="description">Open settings</span>
+          <span class="click-hint">Click</span>
         </div>
-        <div class="shortcut-item">
+        <div class="shortcut-item clickable" data-command="generate_email">
           <span class="key">Ctrl+Shift+A</span>
           <span class="description">Generate email</span>
+          <span class="click-hint">Click</span>
         </div>
-        <div class="shortcut-item">
+        <div
+          class="shortcut-item clickable"
+          data-command="generate_email_with_instruction"
+        >
           <span class="key">Ctrl+Shift+I</span>
           <span class="description">Generate with instruction</span>
+          <span class="click-hint">Click</span>
         </div>
       </div>
+      <div class="status" id="status"></div>
     </div>
     <script src="popup.js"></script>
   </body>
